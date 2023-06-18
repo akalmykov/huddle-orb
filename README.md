@@ -1,6 +1,6 @@
 # 🔮 Huddle01 Orb • [![test](https://github.com/orbland/orb/actions/workflows/ci.yml/badge.svg)](https://github.com/orbland/orb/actions/workflows/ci.yml) ![license](https://img.shields.io/badge/License-MIT-green.svg?label=license)
 
-This is a fork of original [Orb](https://github.com/orbland/orb) supports video calls in 
+This is a fork of the original [Orb](https://github.com/orbland/orb) supporting video calls via Huddle01 ERC721 token-gated rooms.
 
 The contract combines the following areas of functionality:
 
