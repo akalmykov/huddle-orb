@@ -34,6 +34,8 @@ contract OrbPondTestBase is Test {
             beneficiary,
             0xa0a79538f3c69ab225db00333ba71e9265d3835a715fd7e15ada45dc746608bc,
             100,
+            0,
+            0,
             "test baseURI"
         );
 
@@ -59,13 +61,20 @@ contract DeployTest is OrbPondTestBase {
             beneficiary,
             0xa0a79538f3c69ab225db00333ba71e9265d3835a715fd7e15ada45dc746608bc,
             100,
+            0,
+            0,
             "test baseURI"
         );
     }
 
     event Creation(bytes32 indexed oathHash, uint256 indexed honoredUntil);
     event OrbCreation(
-        uint256 indexed orbId, address indexed orbAddress, bytes32 indexed oathHash, uint256 honoredUntil
+        uint256 indexed orbId,
+        address indexed orbAddress,
+        bytes32 indexed oathHash,
+        uint256 honoredUntil,
+        uint256 timeSlotBegin,
+        uint256 timeSlotEnd
     );
 
     function test_deploy() public {
@@ -78,8 +87,10 @@ contract DeployTest is OrbPondTestBase {
             0,
             0x104fBc016F4bb334D775a19E8A6510109AC63E00,
             0xa0a79538f3c69ab225db00333ba71e9265d3835a715fd7e15ada45dc746608bc,
-            100
-        );
+            100,
+            0,
+            0
+            );
 
         orbPond.createOrb(
             "TestOrb",
@@ -88,6 +99,8 @@ contract DeployTest is OrbPondTestBase {
             beneficiary,
             0xa0a79538f3c69ab225db00333ba71e9265d3835a715fd7e15ada45dc746608bc,
             100,
+            0,
+            0,
             "test baseURI"
         );
     }

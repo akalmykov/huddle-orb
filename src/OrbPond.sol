@@ -12,7 +12,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 /// @dev     Uses `Ownable`'s `owner()` to limit the creation of new Orbs to the administrator.
 contract OrbPond is Ownable {
     event OrbCreation(
-        uint256 indexed orbId, address indexed orbAddress, bytes32 indexed oathHash, uint256 honoredUntil
+        uint256 indexed orbId, address indexed orbAddress, bytes32 indexed oathHash, uint256 honoredUntil, uint256 timeSlotBegin, uint256 timeSlotEnd
     );
 
     /// The mapping of Orb ids to Orbs. Increases monotonically.
@@ -35,6 +35,8 @@ contract OrbPond is Ownable {
         address beneficiary,
         bytes32 oathHash,
         uint256 honoredUntil,
+        uint256 timeSlotBegin,
+        uint256 timeSlotEnd,
         string memory baseURI
     ) external onlyOwner {
         orbs[orbCount] = new Orb(
@@ -44,11 +46,12 @@ contract OrbPond is Ownable {
             beneficiary,
             oathHash,
             honoredUntil,
+            timeSlotBegin,
+            timeSlotEnd,
             baseURI
         );
 
-        emit OrbCreation(orbCount, address(orbs[orbCount]), oathHash, honoredUntil);
-
+        emit OrbCreation(orbCount, address(orbs[orbCount]), oathHash, honoredUntil, timeSlotBegin, timeSlotEnd);
         orbCount++;
     }
 

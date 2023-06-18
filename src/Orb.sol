@@ -85,11 +85,15 @@ contract Orb is Ownable, ERC165, ERC721, IOrb {
     uint256 internal constant COOLDOWN_MAXIMUM_DURATION = 3650 days;
     /// Maximum Orb price, limited to prevent potential overflows.
     uint256 internal constant MAXIMUM_PRICE = 2 ** 128;
+    uint256 internal constant ONE_WEEK = 604800;
 
     // STATE
 
     /// Honored Until: timestamp until which the Orb Oath is honored for the keeper.
     uint256 public honoredUntil;
+
+    uint256 public timeSlotBegin;
+    uint256 public timeSlotEnd;
 
     /// Base URI for tokenURI JSONs. Initially set in the `constructor` and setable with `setBaseURI()`.
     string internal baseURI;
@@ -194,6 +198,8 @@ contract Orb is Ownable, ERC165, ERC721, IOrb {
         address beneficiary_,
         bytes32 oathHash_,
         uint256 honoredUntil_,
+        uint256 timeSlotBegin_,
+        uint256 timeSlotEnd_,
         string memory baseURI_
     ) ERC721(name_, symbol_) {
         tokenId = tokenId_;
@@ -201,6 +207,8 @@ contract Orb is Ownable, ERC165, ERC721, IOrb {
         honoredUntil = honoredUntil_;
         baseURI = baseURI_;
 
+        timeSlotBegin = timeSlotBegin_;
+        timeSlotEnd = timeSlotEnd_;
         emit Creation(oathHash_, honoredUntil_);
 
         _safeMint(address(this), tokenId);
@@ -281,6 +289,16 @@ contract Orb is Ownable, ERC165, ERC721, IOrb {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  FUNCTIONS: ERC-721 OVERRIDES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    function balanceOf(address owner) public view virtual override returns (uint256) {
+        uint256 inWeekTime = block.timestamp % ONE_WEEK;
+        if (inWeekTime >= timeSlotBegin && inWeekTime <= timeSlotEnd) {
+            return super.balanceOf(owner);
+        } else {
+            return 0;
+        }
+    }
 
     /// @dev     Override to provide ERC-721 contract's `tokenURI()` with the baseURI.
     /// @return  baseURIValue  Current baseURI value.

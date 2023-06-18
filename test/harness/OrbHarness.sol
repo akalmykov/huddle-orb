@@ -12,6 +12,8 @@ contract OrbHarness is
         address(0xC0FFEE), // beneficiary
         keccak256(abi.encodePacked("test oath")), // oathHash
         100, // 1_700_000_000 // honoredUntil
+        0,
+        0,
         "https://static.orb.land/orb/" // baseURI
     )
 {
